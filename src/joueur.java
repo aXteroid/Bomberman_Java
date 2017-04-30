@@ -1,8 +1,17 @@
-import java.math.*;
+/*import java.math.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener; */
+
+import java.util.Scanner;
 public class joueur {
 	public static void main(String[] args){
 		initialisation_map();
-		personnage P1 = new personnage("joueur_1", 3);
+		personnage P1 = new personnage("joueur_1", 3,0,0,0,0,0);
+		System.out.println(mouvement());
 	}
 	public static void initialisation_map(){
 		StdDraw.setXscale(0,21);
@@ -56,6 +65,22 @@ public class joueur {
 		perso.lifepoint = personnage.lifepoint - 1;
 	}
 	
+
+    public static void mouvement(){
+    	if(StdDraw.isKeyPressed('z')){
+    		personnage.y_position += 0.1;
+    	}
+    	else if(StdDraw.isKeyPressed('q')){
+    		personnage.x_position -= 0.1;
+    	}
+    	else if(StdDraw.isKeyPressed('d')){
+    		personnage.x_position += 0.1;
+    	}
+    	else if(StdDraw.isKeyPressed('s')){
+    		personnage.y_position -= 0.1;
+    	}
+
+ }
 	/*
 	public static void item_drop(){
 		double d = Math.random();
