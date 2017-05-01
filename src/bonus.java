@@ -4,12 +4,22 @@ public class bonus {
 	int destructivity;
 	float speed;
 	int lifepoint;
+	int capacity;
 	
-	public bonus (int a, int b, int c, int d){
+	public bonus (int a, int b, int c, int d, int e){
 		this.exploding_area = a;
 		this.destructivity = b;
 		this.speed = c;
 		this.lifepoint = d;
+		this.capacity = e;
+	}
+
+	public int getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
 	}
 
 	public int getExploding_area() {

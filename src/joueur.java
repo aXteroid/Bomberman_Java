@@ -7,11 +7,19 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener; */
 
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 public class joueur {
 	public static void main(String[] args){
 		initialisation_map();
-		personnage P1 = new personnage("joueur_1", 3,0,0,0,0,0);
-		System.out.println(mouvement());
+		personnage P1 = new personnage("joueur_1", 3,8,8,0,0,0);
+		picture(10.5, 10.5, "bomberman_256.png");
+		try {
+			deplacement();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	public static void initialisation_map(){
 		StdDraw.setXscale(0,21);
@@ -64,61 +72,110 @@ public class joueur {
 	public static void perte_vie(personnage perso){
 		perso.lifepoint = personnage.lifepoint - 1;
 	}
-	
-
-    public static void mouvement(){
-    	if(StdDraw.isKeyPressed('z')){
-    		personnage.y_position += 0.1;
+    public static String direction_mouvement(){
+    	if (personnage.getX_position() > 2 && personnage.getX_position() < 20.5 && personnage.getY_position() > 2 && personnage.getY_position() < 16){
+	    	if(StdDraw.isKeyPressed('z')){
+	    		return "up";
+	    	}
+	    	else if(StdDraw.isKeyPressed('q')){
+	    		return "left";
+	    	}
+	    	else if(StdDraw.isKeyPressed('d')){
+	    		return "right";
+	    	}
+	    	else if(StdDraw.isKeyPressed('s')){
+	    		return "down";
+	    	}
+	    	else{
+	    		return "down";
+	    	}
     	}
-    	else if(StdDraw.isKeyPressed('q')){
-    		personnage.x_position -= 0.1;
+    	else{
+    		return "none";
     	}
-    	else if(StdDraw.isKeyPressed('d')){
-    		personnage.x_position += 0.1;
-    	}
-    	else if(StdDraw.isKeyPressed('s')){
-    		personnage.y_position -= 0.1;
-    	}
-
  }
-	/*
-	public static void item_drop(){
+	public static bonus item_drop(){
 		double d = Math.random();
+		bonus x = new bonus(0,0,0,0,0);
 		int n = (int)d;
 		n = (int)(Math.random() * 8);
 		if (n == 0){
-			bonus = blue_flame;
+			x = new bonus(-1,0,0,0,0); //blue flame
+			return x;
 		}
-		if (n == 1){
-			bonus = yellow_flame;
+		else if (n == 1){
+			x = new bonus(1,0,0,0,0); //yellow flame
+			return x;
 		}
-		if (n == 2){
-			bonus = red_flame;
+		else if (n == 2){
+			x = new bonus(10,0,0,0,0); //red flame
+			return x;
 		}
-		if (n == 3){
-			bonus = red_bomb;
+		else if (n == 3){
+			x = new bonus(0,1,0,0,0); //red bomb
+			return x;
 		}
-		if (n == 4){
-			bonus = life;
+		else if (n == 4){
+			x = new bonus(0,0,0,1,0); // health point
+			return x;
 		}
-		if (n == 5){
-			bonus = speed_up;
+		else if (n == 5){
+			x = new bonus(0,0,1,0,0); //speed_up
+			return x;
 		}
-		if (n == 6){
-			bonus = speed_down;
+		else if (n == 6){
+			x = new bonus(0,0,-1,0,0); //speed_up
+			return x;
 		}
-		if (n == 7){
-			bonus = bomb_plus;
+		else if (n == 7){
+			x = new bonus(0,0,-2,0,0); //-2 bombs available
+			return x;
 		}
-		if (n == 8){
-			bonus = bomb_minus;
+		else if (n == 8){
+			x = new bonus(0,0,2,0,0); //+2 bombs available
+			return x;
+		}
+		return x;	
+	}
+	public static void picture(double x,double y,java.lang.String s){
+		StdDraw.picture(x, y, s);
+}
+	public static void deplacement () throws InterruptedException {
+		while (direction_mouvement() == "up"){
+			personnage.setX_position(personnage.getX_position()); //change position x du perso en fonction du déplacement
+			personnage.setY_position((float) (personnage.getY_position()+0.1));//change position y du perso en fonction du déplacement
+			StdDraw.picture(personnage.getX_position()-0.5, personnage.getY_position()-0.5, "bomberman_256.png"); //dessine le perso à la position suivante 
+			StdDraw.setPenColor(StdDraw.ORANGE); 
+			StdDraw.filledRectangle(personnage.getX_position()-0.5,personnage.getY_position()-1,0.53,0.07); //on réécrit un rectangle orange à la place que le perso vient de laisser vide
+			Thread.sleep(30);
+		}
+		while (direction_mouvement() == "down"){
+			personnage.setX_position(personnage.getX_position());
+			personnage.setY_position((float) (personnage.getY_position()-0.1));
+			StdDraw.picture(personnage.getX_position()-0.5, personnage.getY_position()-0.4, "bomberman_256.png");
+			StdDraw.setPenColor(StdDraw.ORANGE);
+			StdDraw.filledRectangle(personnage.getX_position()-0.5,personnage.getY_position()+0.1,0.53,0.07);
+			Thread.sleep(30);
+		}
+		while (direction_mouvement() == "right"){
+			personnage.setX_position((float) (personnage.getX_position()+0.1));
+			personnage.setY_position(personnage.getY_position());
+			StdDraw.picture(personnage.getX_position()-1, personnage.getY_position()-0.5, "bomberman_256.png");
+			StdDraw.setPenColor(StdDraw.ORANGE);
+			StdDraw.filledRectangle(personnage.getX_position()-1.5,personnage.getY_position()-0.5,0.07,0.5);
+			Thread.sleep(30);
+		}
+		while (direction_mouvement() == "left"){
+			personnage.setX_position((float) (personnage.getX_position()-0.1));
+			personnage.setY_position(personnage.getY_position());
+			StdDraw.picture(personnage.getX_position()-0.5, personnage.getY_position()-0.5, "bomberman_256.png");
+			StdDraw.setPenColor(StdDraw.ORANGE);
+			StdDraw.filledRectangle(personnage.getX_position()+0.1,personnage.getY_position()-0.5,0.07,0.5);
+			Thread.sleep(30);
 		}
 	}
-	public static void explosion(int area, b){
-		
-	}
 }
-*/
-}
+
+
 
 
