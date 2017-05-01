@@ -5,7 +5,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener; */
-
+import java.awt.KeyEventDispatcher;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 public class joueur {
@@ -70,7 +70,7 @@ public class joueur {
 			
 		}
 	public static void perte_vie(personnage perso){
-		perso.lifepoint = personnage.lifepoint - 1;
+		perso.setLifepoint(perso.getLifepoint()-1);
 	}
     public static String direction_mouvement(){
     	if (personnage.getX_position() > 2 && personnage.getX_position() < 20.5 && personnage.getY_position() > 2 && personnage.getY_position() < 16){

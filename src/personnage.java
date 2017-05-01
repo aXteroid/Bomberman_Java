@@ -1,11 +1,11 @@
 
 public class personnage {
 	public String name;
-	static int lifepoint;
-	static float x_position;
-	static float y_position;
-	static int capacity; //nb bombe posable en meme temps
-	static float speed;
+	private static int lifepoint;
+	private static float x_position;
+	private static float y_position;
+	private static int capacity; //nb bombe posable en meme temps
+	private static float speed;
 	static int inprogress_bombs;
 	
 	public personnage (String nom, int lifepoint1, float position_x, float position_y, int capacite, float vitesse, int bombe_en_cours){
