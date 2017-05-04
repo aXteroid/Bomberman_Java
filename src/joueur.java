@@ -74,7 +74,7 @@ public class joueur {
 		perso.setLifepoint(perso.getLifepoint()-1);
 	}
     public static String direction_mouvement(){
-    	String dir = "up";
+    	String dir = "left";
 	    	if (personnage.getX_position() > 2 && personnage.getX_position() < 20.5 && personnage.getY_position() > 2 && personnage.getY_position() < 16){
 		    	while (StdDraw.isKeyPressed(KeyEvent.VK_UP)){
 		    		dir = "up";
