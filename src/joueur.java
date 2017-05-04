@@ -11,14 +11,13 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 public class joueur {
 	public static void main(String[] args){
+		DebutPartie();
 		initialisation_map();
-		personnage P1 = new personnage("joueur_1", 3,8,8,0,0,0);
+		
 		picture(10.5, 10.5, "bomberman_256.png");
-		try {
+		while (true){
 			deplacement();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			direction_mouvement();
 		}
 		
 	}
@@ -74,25 +73,28 @@ public class joueur {
 		perso.setLifepoint(perso.getLifepoint()-1);
 	}
     public static String direction_mouvement(){
-    	String dir = "left";
+   
+    	while (true){
 	    	if (personnage.getX_position() > 2 && personnage.getX_position() < 20.5 && personnage.getY_position() > 2 && personnage.getY_position() < 16){
-		    	while (StdDraw.isKeyPressed(KeyEvent.VK_UP)){
+	    		String dir = null;
+		    	if (StdDraw.isKeyPressed(KeyEvent.VK_UP)){
 		    		dir = "up";
 		    	}
-		    	while (StdDraw.isKeyPressed(KeyEvent.VK_LEFT)){
+		    	if (StdDraw.isKeyPressed(KeyEvent.VK_LEFT)){
 		    		dir = "left";
 		    	}
-		    	while (StdDraw.isKeyPressed(KeyEvent.VK_RIGHT)){
+		    	if (StdDraw.isKeyPressed(KeyEvent.VK_RIGHT)){
 		    		dir = "right";
 		    	}
-		    	while (StdDraw.isKeyPressed(KeyEvent.VK_DOWN)){
+		    	if (StdDraw.isKeyPressed(KeyEvent.VK_DOWN)){
 		    		dir = "down";
 		    	}
 		    	return dir;
 	    	}
 	    	else{
-	    		return dir;
+	    		return "none";
 	    	}
+    	}
  }
 	public static bonus item_drop(){
 		double d = Math.random();
@@ -140,39 +142,56 @@ public class joueur {
 	public static void picture(double x,double y,java.lang.String s){
 		StdDraw.picture(x, y, s);
 }
-	public static void deplacement () throws InterruptedException {
-		while (direction_mouvement() == "up"){
+	public static void deplacement (){
+		if (direction_mouvement() == "up"){
 			personnage.setX_position(personnage.getX_position()); //change position x du perso en fonction du déplacement
 			personnage.setY_position((float) (personnage.getY_position()+0.1));//change position y du perso en fonction du déplacement
 			StdDraw.picture(personnage.getX_position()-0.5, personnage.getY_position()-0.5, "bomberman_256.png"); //dessine le perso à la position suivante 
 			StdDraw.setPenColor(StdDraw.ORANGE); 
 			StdDraw.filledRectangle(personnage.getX_position()-0.5,personnage.getY_position()-1,0.53,0.07); //on réécrit un rectangle orange à la place que le perso vient de laisser vide
-			Thread.sleep(30);
+			StdDraw.pause(20);
 		}
-		while (direction_mouvement() == "down"){
+		if (direction_mouvement() == "down"){
 			personnage.setX_position(personnage.getX_position());
 			personnage.setY_position((float) (personnage.getY_position()-0.1));
-			StdDraw.picture(personnage.getX_position()-0.5, personnage.getY_position()-0.4, "bomberman_256.png");
+			StdDraw.picture(personnage.getX_position()-0.5, personnage.getY_position()-0.5, "bomberman_256.png");
 			StdDraw.setPenColor(StdDraw.ORANGE);
 			StdDraw.filledRectangle(personnage.getX_position()-0.5,personnage.getY_position()+0.1,0.53,0.07);
-			Thread.sleep(30);
+			StdDraw.pause(20);
 		}
-		while (direction_mouvement() == "right"){
+		if (direction_mouvement() == "right"){
 			personnage.setX_position((float) (personnage.getX_position()+0.1));
 			personnage.setY_position(personnage.getY_position());
-			StdDraw.picture(personnage.getX_position()-1, personnage.getY_position()-0.5, "bomberman_256.png");
+			StdDraw.picture(personnage.getX_position()-0.5, personnage.getY_position()-0.5, "bomberman_256.png");
 			StdDraw.setPenColor(StdDraw.ORANGE);
-			StdDraw.filledRectangle(personnage.getX_position()-1.5,personnage.getY_position()-0.5,0.07,0.5);
-			Thread.sleep(30);
+			StdDraw.filledRectangle(personnage.getX_position()-1,personnage.getY_position()-0.5,0.07,0.5);
+			StdDraw.pause(20);
 		}
-		while (direction_mouvement() == "left"){
+		if (direction_mouvement() == "left"){
 			personnage.setX_position((float) (personnage.getX_position()-0.1));
 			personnage.setY_position(personnage.getY_position());
 			StdDraw.picture(personnage.getX_position()-0.5, personnage.getY_position()-0.5, "bomberman_256.png");
 			StdDraw.setPenColor(StdDraw.ORANGE);
 			StdDraw.filledRectangle(personnage.getX_position()+0.1,personnage.getY_position()-0.5,0.07,0.5);
-			Thread.sleep(30);
+			StdDraw.pause(20);
 		}
+	}
+	public static void DebutPartie (){
+		
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Entrer le nom de votre personnage 1");
+		String Nom1 = scan.nextLine();
+		personnage P1= new personnage(3, 0, 0, 0, 0, 0);
+		P1.setName(""+Nom1+"");
+		System.out.println("Entrer le nom de votre personnage 2");
+		String Nom2 = scan.nextLine();
+		personnage P2= new personnage(5, 0, 0, 0, 0, 0);
+		P2.setName(""+Nom2+"");
+		scan.close();
+		
+		System.out.println(""+P1.getName()+", tu as "+P1.getLifepoint()+" points de vie !");
+		System.out.println(""+P2.getName()+", tu as "+P2.getLifepoint()+" points de vie !");
+
 	}
 }
 

@@ -8,8 +8,7 @@ public class personnage {
 	private static float speed;
 	static int inprogress_bombs;
 	
-	public personnage (String nom, int lifepoint1, float position_x, float position_y, int capacite, float vitesse, int bombe_en_cours){
-		this.name = nom;
+	public personnage (int lifepoint1, float position_x, float position_y, int capacite, float vitesse, int bombe_en_cours){
 		this.lifepoint = lifepoint1;
 		this.x_position = position_x;
 		this.y_position = position_y;
