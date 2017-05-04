@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener; */
 import java.awt.KeyEventDispatcher;
+import java.awt.event.KeyEvent;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 public class joueur {
@@ -73,26 +74,25 @@ public class joueur {
 		perso.setLifepoint(perso.getLifepoint()-1);
 	}
     public static String direction_mouvement(){
-    	if (personnage.getX_position() > 2 && personnage.getX_position() < 20.5 && personnage.getY_position() > 2 && personnage.getY_position() < 16){
-	    	if(StdDraw.isKeyPressed('z')){
-	    		return "up";
-	    	}
-	    	else if(StdDraw.isKeyPressed('q')){
-	    		return "left";
-	    	}
-	    	else if(StdDraw.isKeyPressed('d')){
-	    		return "right";
-	    	}
-	    	else if(StdDraw.isKeyPressed('s')){
-	    		return "down";
+    	String dir = "up";
+	    	if (personnage.getX_position() > 2 && personnage.getX_position() < 20.5 && personnage.getY_position() > 2 && personnage.getY_position() < 16){
+		    	while (StdDraw.isKeyPressed(KeyEvent.VK_UP)){
+		    		dir = "up";
+		    	}
+		    	while (StdDraw.isKeyPressed(KeyEvent.VK_LEFT)){
+		    		dir = "left";
+		    	}
+		    	while (StdDraw.isKeyPressed(KeyEvent.VK_RIGHT)){
+		    		dir = "right";
+		    	}
+		    	while (StdDraw.isKeyPressed(KeyEvent.VK_DOWN)){
+		    		dir = "down";
+		    	}
+		    	return dir;
 	    	}
 	    	else{
-	    		return "down";
+	    		return dir;
 	    	}
-    	}
-    	else{
-    		return "none";
-    	}
  }
 	public static bonus item_drop(){
 		double d = Math.random();
