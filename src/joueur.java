@@ -10,17 +10,30 @@ import java.awt.event.KeyEvent;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 public class joueur {
+	private float walls[][] = new float[357][4];
 	public static void main(String[] args){
-		DebutPartie();
+		//DebutPartie();
 		initialisation_map();
+		personnage personnage = new personnage(3,8,8,0,0,0);
 		
 		picture(10.5, 10.5, "bomberman_256.png");
 		while (true){
-			deplacement();
-			direction_mouvement();
+			deplacement(personnage);
+			direction_mouvement(personnage);
 		}
 		
 	}
+	public void addwall (int type, int x_position, int y_position){
+		for (int i=0;i<357;i++){
+				int wall_id = i;
+				if (walls[wall_id][1] != x_position && walls[wall_id][2] != y_position){
+					walls[wall_id][0]=0; //breakable wall
+					walls[wall_id][1]= x_position;
+					walls[wall_id][2]= y_position;
+				}
+			}
+		}
+	
 	public static void initialisation_map(){
 		StdDraw.setXscale(0,21);
 		StdDraw.setYscale(0,17);
@@ -28,7 +41,8 @@ public class joueur {
 			for(int y=0;y<17;y++){
 				if (x%2 == 1 || y%2 == 1){ //On créé le contour
 					StdDraw.setPenColor(StdDraw.ORANGE);
-					String type_objet = "breakable"; //Type = 1 => Mur Indestructible
+					String type_objet = "breakable"; //Type = 1 => Mur destructible
+					
 				}
 				
 				else{
@@ -69,11 +83,10 @@ public class joueur {
 			String type_objet = "path";
 			
 		}
-	public static void perte_vie(personnage perso){
+	public void perte_vie(personnage perso){
 		perso.setLifepoint(perso.getLifepoint()-1);
 	}
-    public static String direction_mouvement(){
-   
+    public static String direction_mouvement(personnage personnage){
     	while (true){
 	    	if (personnage.getX_position() > 2 && personnage.getX_position() < 20.5 && personnage.getY_position() > 2 && personnage.getY_position() < 16){
 	    		String dir = null;
@@ -96,7 +109,7 @@ public class joueur {
 	    	}
     	}
  }
-	public static bonus item_drop(){
+	public bonus item_drop(){
 		double d = Math.random();
 		bonus x = new bonus(0,0,0,0,0);
 		int n = (int)d;
@@ -142,7 +155,7 @@ public class joueur {
 	public static void picture(double x,double y,java.lang.String s){
 		StdDraw.picture(x, y, s);
 }
-	public static void deplacement (){
+	public static void deplacement (personnage personnage){
 		if (direction_mouvement() == "up"){
 			personnage.setX_position(personnage.getX_position()); //change position x du perso en fonction du déplacement
 			personnage.setY_position((float) (personnage.getY_position()+0.1));//change position y du perso en fonction du déplacement
@@ -176,7 +189,7 @@ public class joueur {
 			StdDraw.pause(20);
 		}
 	}
-	public static void DebutPartie (){
+	/*public static void DebutPartie (){
 		
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Entrer le nom de votre personnage 1");
@@ -192,7 +205,7 @@ public class joueur {
 		System.out.println(""+P1.getName()+", tu as "+P1.getLifepoint()+" points de vie !");
 		System.out.println(""+P2.getName()+", tu as "+P2.getLifepoint()+" points de vie !");
 
-	}
+	}*/
 }
 
 

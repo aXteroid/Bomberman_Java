@@ -1,12 +1,12 @@
 
 public class personnage {
 	public String name;
-	private static int lifepoint;
-	private static float x_position;
-	private static float y_position;
-	private static int capacity; //nb bombe posable en meme temps
-	private static float speed;
-	static int inprogress_bombs;
+	private int lifepoint;
+	private float x_position;
+	private float y_position;
+	private int capacity; //nb bombe posable en meme temps
+	private float speed;
+	private int inprogress_bombs;
 	
 	public personnage (int lifepoint1, float position_x, float position_y, int capacite, float vitesse, int bombe_en_cours){
 		this.lifepoint = lifepoint1;
@@ -17,12 +17,12 @@ public class personnage {
 		this.inprogress_bombs = bombe_en_cours;
 	}
 
-	public static float getSpeed() {
+	public float getSpeed() {
 		return speed;
 	}
 
-	public static void setSpeed(float speed) {
-		personnage.speed = speed;
+	public void setSpeed(float speed) {
+		this.speed = speed;
 	}
 
 	public String getName() {
@@ -33,36 +33,36 @@ public class personnage {
 		this.name = name;
 	}
 
-	public static int getLifepoint() {
+	public int getLifepoint() {
 		return lifepoint;
 	}
 
-	public static void setLifepoint(int lifepoint) {
-		personnage.lifepoint = lifepoint;
+	public void setLifepoint(int lifepoint) {
+		this.lifepoint = lifepoint;
 	}
 
-	public static float getX_position() {
+	public float getX_position() {
 		return x_position;
 	}
 
-	public static void setX_position(float x_position) {
-		personnage.x_position = x_position;
+	public void setX_position(float x_position) {
+		this.x_position = x_position;
 	}
 
-	public static float getY_position() {
+	public float getY_position() {
 		return y_position;
 	}
 
-	public static void setY_position(float y_position) {
-		personnage.y_position = y_position;
+	public void setY_position(float y_position) {
+		this.y_position = y_position;
 	}
 
-	public static int getCapacity() {
+	public int getCapacity() {
 		return capacity;
 	}
 
-	public static void setCapacity(int capacity) {
-		personnage.capacity = capacity;
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
 	}
 
 	
